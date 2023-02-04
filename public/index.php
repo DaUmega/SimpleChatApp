@@ -9,8 +9,18 @@ use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use PDO;
 
 require __DIR__ . '/../vendor/autoload.php';
+// require __DIR__ . '/../myconfig/dbconnect.php';
+
+session_start();
+if (isset($_GET["Id"])) {
+	$_Session["Id"] = $_GET["Id"];
+	header("location: chat.php");
+}
 
 // Instantiate PHP-DI ContainerBuilder
 $containerBuilder = new ContainerBuilder();
@@ -40,43 +50,75 @@ $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
 // Register middleware
-$middleware = require __DIR__ . '/../app/middleware.php';
-$middleware($app);
+// $middleware = require __DIR__ . '/../app/middleware.php';
+// $middleware($app);
 
 // Register routes
-$routes = require __DIR__ . '/../app/routes.php';
-$routes($app);
+// $routes = require __DIR__ . '/../app/routes.php';
+// $routes($app);
 
-/** @var SettingsInterface $settings */
-$settings = $container->get(SettingsInterface::class);
+// /** @var SettingsInterface $settings */
+// $settings = $container->get(SettingsInterface::class);
 
-$displayErrorDetails = $settings->get('displayErrorDetails');
-$logError = $settings->get('logError');
-$logErrorDetails = $settings->get('logErrorDetails');
+// $displayErrorDetails = $settings->get('displayErrorDetails');
+// $logError = $settings->get('logError');
+// $logErrorDetails = $settings->get('logErrorDetails');
 
 // Create Request object from globals
-$serverRequestCreator = ServerRequestCreatorFactory::create();
-$request = $serverRequestCreator->createServerRequestFromGlobals();
+// $serverRequestCreator = ServerRequestCreatorFactory::create();
+// $request = $serverRequestCreator->createServerRequestFromGlobals();
 
 // Create Error Handler
-$responseFactory = $app->getResponseFactory();
-$errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
+// $responseFactory = $app->getResponseFactory();
+// $errorHandler = new HttpErrorHandler($callableResolver, $responseFactory);
 
 // Create Shutdown Handler
-$shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
-register_shutdown_function($shutdownHandler);
+// $shutdownHandler = new ShutdownHandler($request, $errorHandler, $displayErrorDetails);
+// register_shutdown_function($shutdownHandler);
 
 // Add Routing Middleware
-$app->addRoutingMiddleware();
+// $app->addRoutingMiddleware();
 
 // Add Body Parsing Middleware
-$app->addBodyParsingMiddleware();
+// $app->addBodyParsingMiddleware();
 
 // Add Error Middleware
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logError, $logErrorDetails);
-$errorMiddleware->setDefaultErrorHandler($errorHandler);
+// $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logError, $logErrorDetails);
+// $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 // Run App & Emit Response
-$response = $app->handle($request);
-$responseEmitter = new ResponseEmitter();
-$responseEmitter->emit($response);
+// $response = $app->handle($request);
+// $responseEmitter = new ResponseEmitter();
+// $responseEmitter->emit($response);
+
+$app->get('/', function (Request $request, Response $response) {
+	$response->getBody()->write('Test');
+	return $response;
+});
+
+$app->run();
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div>
+		<h4>Choose your account</h4>
+	</div>
+	<div>
+		<?php
+		// 	$result = $pdo->query("SELECT * FROM Users")->fetchAll();
+		// 	foreach ($result as $row) {
+		// 		echo '<li>
+		// 			<a href="index.php?Id=' . $row["Id"] . '">' . $row["Name"] . '</a>
+		// 		</li>';
+		// 	}
+		// ?>
+	</div>
+	<h4><a href="/register.php">Register</a></h4>
+</body>
+</html>

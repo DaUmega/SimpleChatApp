@@ -24,7 +24,7 @@ if (isset($_POST["uName"])) {
 	<div>
 		<form action = "register.php" method = "POST">
 			<p>Name</p>
-			<input type = "text" name = "uName" id = "uName" />
+			<input type = "text" name = "uName" />
 			<br>
 			<input type = "submit" name = "submit" class = "btn btn-primary" value = "Submit"/>
 		</form>

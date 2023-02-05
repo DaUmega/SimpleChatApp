@@ -92,7 +92,7 @@ $callableResolver = $app->getCallableResolver();
 // $responseEmitter->emit($response);
 
 $app->get('/', function (Request $request, Response $response) {
-	$response->getBody()->write('test');
+	$response->getBody()->write('');
 	return $response;
 });
 
@@ -114,7 +114,7 @@ $app->run();
 			$result = $pdo->query("SELECT * FROM Users")->fetchAll();
 			foreach ($result as $row) {
 				echo '<li>
-					<a href="index.php?Id=' . $row["Id"] . '">' . $row["Name"] . '</a>
+					<a href="/chat.php?Id=' . $row["Id"] . '">' . $row["Name"] . '</a>
 				</li>';
 			}
 		?>

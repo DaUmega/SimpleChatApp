@@ -1,5 +1,5 @@
 <?php
-// require __DIR__ . '/../myconfig/dbconnect.php';
+require __DIR__ . '/../myconfig/dbconnect.php';
 session_start();
 $user = $pdo->query("SELECT * FROM Users WHERE Id = '".$_SESSION["Id"]."'");
 if (isset($_POST["uName"])) {
@@ -27,12 +27,12 @@ if (isset($_POST["uName"])) {
 		<p>Send To:</p>
 		<ul>
 			<?php
-				// $msgs = $pdo->query("SELECT * FROM Users");
-				// foreach ($msg as $msgs) {
-				// 	echo '<li>
-				// 		<a href="?ToId=' . $msg["Id"] . '">' . $msg["Name"] . '</a>
-				// 	</li>';
-				// }
+				$msgs = $pdo->query("SELECT * FROM Users");
+				foreach ($msg as $msgs) {
+					echo '<li>
+						<a href="?ToId=' . $msg["Id"] . '">' . $msg["Name"] . '</a>
+					</li>';
+				}
 			?>
 		</ul>
 		<a href="index.php">Home</a>

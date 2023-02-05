@@ -1,12 +1,12 @@
 <?php
-// require __DIR__ . '/../myconfig/dbconnect.php';
+require __DIR__ . '/../myconfig/dbconnect.php';
 
 session_start();
 if (isset($_POST["uName"])) {
 	$cmd = "INSERT INTO Users(Name) VALUES('" . $_POST["uName"] . "')";
 
 	if ($pdo->query($cmd))
-		header('Location: index.php');
+		header('Location: /');
 	else
 		echo "Error with registration.";
 }

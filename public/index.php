@@ -14,7 +14,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use PDO;
 
 require __DIR__ . '/../vendor/autoload.php';
-// require __DIR__ . '/../myconfig/dbconnect.php';
+require __DIR__ . '/../myconfig/dbconnect.php';
 
 session_start();
 if (isset($_GET["Id"])) {
@@ -92,7 +92,7 @@ $callableResolver = $app->getCallableResolver();
 // $responseEmitter->emit($response);
 
 $app->get('/', function (Request $request, Response $response) {
-	$response->getBody()->write('Test');
+	$response->getBody()->write('test');
 	return $response;
 });
 
@@ -111,13 +111,13 @@ $app->run();
 	</div>
 	<div>
 		<?php
-		// 	$result = $pdo->query("SELECT * FROM Users")->fetchAll();
-		// 	foreach ($result as $row) {
-		// 		echo '<li>
-		// 			<a href="index.php?Id=' . $row["Id"] . '">' . $row["Name"] . '</a>
-		// 		</li>';
-		// 	}
-		// ?>
+			$result = $pdo->query("SELECT * FROM Users")->fetchAll();
+			foreach ($result as $row) {
+				echo '<li>
+					<a href="index.php?Id=' . $row["Id"] . '">' . $row["Name"] . '</a>
+				</li>';
+			}
+		?>
 	</div>
 	<h4><a href="/register.php">Register</a></h4>
 </body>

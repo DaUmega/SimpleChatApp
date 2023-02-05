@@ -9,7 +9,7 @@ if (isset($_POST["msg"])) {
 	$cmd = "INSERT INTO Msgs(Message) VALUES('" . $_POST["msg"] . "')";
 
 	if ($pdo->query($cmd))
-		header('Location: chat.php/ToId=' . $_["Id"] );
+		header('Location: chat.php/ToId=' . $_SESSION["Id"] );
 	else
 		echo "Error with chat.";
 }
@@ -53,13 +53,14 @@ if (isset($_POST["msg"])) {
 					echo "Message: ", $msg;
 					echo "TO: ", $toname;
 				}
+				echo 'chat.php?ToId=' . $_GET["ToID"] . ' ';
+				echo '<form action = "chat.php?ToId='.$_GET["ToID"].'" method = "POST">
+					<p>Type your message here:</p>
+					<input type = "text" message = "msg" FromId = '.$_SESSION["Id"].'" ToId = "'.$_GET["ToID"].'" multiple/>
+					<br>
+					<input type = "submit" name = "submit" class = "btn btn-primary" value = "Submit"/>
+					</form>';
 			?>
-			<form action = "chat.php?ToId=<?php $_GET["ToID"] ?>" method = "POST">
-				<p>Type your message here:</p>
-				<input type = "text" message = "msg" FromId = <?php $_SESSION["Id"]?> ToId = <?php $_GET["ToID"] ?> multiple/>
-				<br>
-				<input type = "submit" name = "submit" class = "btn btn-primary" value = "Submit"/>
-			</form>
 		<?php endif; ?>
 		<a href="/">Home</a>
 	</div>
